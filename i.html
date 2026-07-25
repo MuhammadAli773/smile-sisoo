@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arfa's Sanctuary 🌸</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;600;700&family=Nunito:wght@400;500;600;700;800&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg1:#FFF5F8;
+    --bg2:#FFE8F0;
+    --card:#FFFFFF;
+    --card2:#FFF0F5;
+    --accent:#F9A8D4;
+    --accent2:#F472B6;
+    --pink:#FFC9E5;
+    --pinkdeep:#F472B6;
+    --glow:#FFE3F3;
+    --mint:#A7F3D0;
+    --text:#4A1240;
+    --text2:#7A4A6A;
+    --success:#6BCB8E;
+    --card-border: rgba(244,114,182,0.25);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%;}
+  body{
+    font-family:'Nunito',sans-serif;
+    background:
+      radial-gradient(ellipse 60% 40% at 15% 0%, rgba(255,201,229,0.45) 0%, rgba(255,201,229,0) 65%),
+      radial-gradient(ellipse 55% 45% at 90% 15%, rgba(249,168,212,0.35) 0%, rgba(249,168,212,0) 65%),
+      radial-gradient(ellipse 70% 60% at 50% 100%, rgba(255,228,240,0.5) 0%, rgba(255,228,240,0) 70%),
+      linear-gradient(160deg, #FFF9FB 0%, #FFE8F0 55%, #FFF0F5 100%);
+    color:var(--text);
+    min-height:100vh;
+    overflow-x:hidden;
+    position:relative;
+  }
+  h1,h2,h3,.display{font-family:'Fredoka',sans-serif; font-weight:600; letter-spacing:0.2px;}
+  .script{font-family:'Caveat',cursive;}
+  ::selection{background:var(--accent); color:#4A1240;}
+  a{color:inherit; text-decoration:none;}
+  #bgLayer{position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none;}
+  .fog{
+    position:absolute; width:140%; height:60%; left:-20%;
+    background: radial-gradient(ellipse at center, rgba(249,168,212,0.12) 0%, rgba(249,168,212,0) 70%);
+    filter: blur(30px);
+    animation: driftFog 40s ease-in-out infinite alternate;
+  }
+  .fog.f2{top:55%; background: radial-gradient(ellipse at center, rgba(255,201,229,0.10) 0%, rgba(255,201,229,0) 70%); animation-duration:55s;}
+  @keyframes driftFog{ 0%{transform:translateX(-4%);} 100%{transform:translateX(4%);} }
+  .star{
+    position:absolute; border-radius:50%; background:#FFB6C1;
+    box-shadow:0 0 6px 1px rgba(255,182,193,0.6);
+    animation: twinkle 3.5s ease-in-out infinite;
+  }
+  @keyframes twinkle{ 0%,100%{opacity:0.2;} 50%{opacity:0.9;} }
+  .firefly{
+    position:absolute; width:5px; height:5px; border-radius:50%;
+    background: #FF9EC8;
+    box-shadow:0 0 8px 3px rgba(255,158,200,0.6);
+    animation: fireflyMove linear infinite;
+    opacity:0.7;
+  }
+  @keyframes fireflyMove{
+    0%{ transform: translate(0,0); opacity:0;}
+    10%{opacity:0.8;}
+    50%{ transform: translate(30px,-40px);}
+    90%{opacity:0.8;}
+    100%{ transform: translate(-20px,-90px); opacity:0;}
+  }
+  .butterfly{
+    position:absolute; opacity:0.65; filter: drop-shadow(0 0 6px rgba(244,114,182,0.35));
+    animation: flyPath linear infinite;
+    font-size:1.4rem;
+  }
+  @keyframes floatUpBit{
+    0%{ transform: translateY(0) translateX(0) rotate(0deg); opacity:0;}
+    8%{opacity:0.5;}
+    92%{opacity:0.5;}
+    100%{ transform: translateY(-120vh) translateX(20px) rotate(25deg); opacity:0;}
+  }
+  @keyframes flyPath{
+    0%{ transform: translate(-10vw,10vh) rotate(-4deg); }
+    25%{ transform: translate(30vw,-4vh) rotate(6deg); }
+    50%{ transform: translate(60vw,16vh) rotate(-6deg); }
+    75%{ transform: translate(85vw,0vh) rotate(4deg); }
+    100%{ transform: translate(110vw,12vh) rotate(-4deg); }
+  }
+  #app{position:relative; z-index:1; min-height:100vh; display:flex; flex-direction:column;}
+  header.topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 24px; backdrop-filter: blur(12px);
+    background: rgba(255,255,255,0.75);
+    position:sticky; top:0; z-index:20;
+    border-bottom:1.5px solid var(--card-border);
+    box-shadow: 0 2px 20px rgba(244,114,182,0.08);
+  }
+  .brand{display:flex; align-items:center; gap:10px; font-size:1.2rem; font-family:'Fredoka',sans-serif; color:var(--text);}
+  .brand .dot{width:9px;height:9px;border-radius:50%; background:var(--pinkdeep); box-shadow:0 0 10px var(--pink);}
+  #menuBtn{
+    background: linear-gradient(160deg, #FFD3EC, #F9A8D4);
+    border:2px solid rgba(255,255,255,0.7); color:#4A1240;
+    padding:9px 16px; border-radius:999px; cursor:pointer; font-size:1rem; font-family:'Fredoka',sans-serif; font-weight:600;
+    transition: transform .2s ease, box-shadow .2s ease;
+    box-shadow: 0 4px 0 #D6579F, inset 0 1px 2px rgba(255,255,255,0.6);
+  }
+  #menuBtn:hover{ transform: translateY(-1px); box-shadow:0 5px 0 #D6579F, 0 6px 16px rgba(249,168,212,0.35), inset 0 1px 2px rgba(255,255,255,0.6);}
+  nav#pageNav{
+    position:fixed; top:0; right:-320px; width:290px; height:100%;
+    background: linear-gradient(180deg, #FFF5F8 0%, #FFE8F0 100%);
+    border-left:1.5px solid var(--card-border);
+    z-index:50; padding:26px 20px; transition: right .35s cubic-bezier(.2,.9,.3,1);
+    display:flex; flex-direction:column; gap:6px; overflow-y:auto;
+    box-shadow: -10px 0 40px rgba(244,114,182,0.12);
+  }
+  nav#pageNav.open{ right:0; }
+  nav#pageNav .navHead{display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; font-family:'Fredoka',sans-serif; color:var(--text);}
+  nav#pageNav a{
+    padding:12px 16px; border-radius:999px; color:var(--text2); font-weight:600;
+    display:flex; align-items:center; gap:10px; transition: all .2s ease; cursor:pointer;
+  }
+  nav#pageNav a:hover, nav#pageNav a.active{ background:rgba(249,168,212,0.25); color:var(--text); transform:translateX(-3px);}
+  #navOverlay{position:fixed; inset:0; background:rgba(255,228,240,0.4); z-index:40; opacity:0; pointer-events:none; transition:opacity .3s ease;}
+  #navOverlay.show{opacity:1; pointer-events:auto;}
+  main{flex:1; padding:36px 20px 100px; max-width:920px; margin:0 auto; width:100%;}
+  .page{display:none; animation: fadeUp .5s ease both;}
+  .page.active{display:block;}
+  @keyframes fadeUp{ from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);} }
+  .card{
+    background: linear-gradient(160deg, rgba(255,255,255,0.95), rgba(255,240,245,0.92));
+    border:1.5px solid var(--card-border);
+    border-radius:28px; padding:26px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 8px 30px rgba(244,114,182,0.1), inset 0 1px 0 rgba(255,255,255,0.9);
+    transition: transform .25s ease, box-shadow .25s ease;
+    position:relative;
+  }
+  .card:hover{ transform:translateY(-4px); box-shadow:0 16px 40px rgba(249,168,212,0.2), inset 0 1px 0 rgba(255,255,255,0.95);}
+  .card::before{
+    content:'🎀'; position:absolute; top:-14px; right:22px; font-size:1.5rem;
+    filter: drop-shadow(0 3px 6px rgba(244,114,182,0.25)); pointer-events:none;
+  }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    background: linear-gradient(160deg, #FFD3EC 0%, #F9A8D4 45%, #E88FC7 100%);
+    border:2px solid rgba(255,255,255,0.7);
+    color:#4A1240; padding:14px 22px; border-radius:999px;
+    font-weight:700; font-family:'Fredoka',sans-serif; cursor:pointer;
+    position:relative; overflow:hidden; transition: transform .2s ease, box-shadow .2s ease;
+    box-shadow: 0 6px 0 #D6579F, 0 10px 20px rgba(244,114,182,0.3), inset 0 2px 4px rgba(255,255,255,0.6);
+  }
+  .btn:hover{ transform: translateY(-2px) scale(1.03); box-shadow:0 8px 0 #D6579F, 0 14px 28px rgba(244,114,182,0.4), inset 0 2px 4px rgba(255,255,255,0.6);}
+  .btn:active{ transform: translateY(2px) scale(0.98); box-shadow:0 3px 0 #D6579F, 0 6px 14px rgba(244,114,182,0.3), inset 0 2px 4px rgba(255,255,255,0.6); }
+  .btn .ripple{position:absolute; border-radius:50%; background:rgba(255,255,255,0.5); transform:scale(0); animation: rippleAnim .6s ease-out;}
+  @keyframes rippleAnim{ to{ transform:scale(3); opacity:0;} }
+  .btn-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:26px;}
+  @media (max-width:560px){ .btn-grid{grid-template-columns:1fr;} }
+  .hero{ text-align:center; padding:50px 10px 20px; }
+  .hero h1{ font-size:clamp(2.1rem, 6vw, 3.4rem); background: linear-gradient(90deg, #F9A8D4, #F472B6, #E879A8); -webkit-background-clip:text; background-clip:text; color:transparent; animation: glowPulse 4s ease-in-out infinite;}
+  @keyframes glowPulse{ 0%,100%{filter:drop-shadow(0 0 8px rgba(249,168,212,0.35));} 50%{filter:drop-shadow(0 0 20px rgba(244,114,182,0.55));} }
+  .hero p.subtitle{ color:var(--text2); margin-top:14px; font-size:1.05rem; max-width:520px; margin-left:auto; margin-right:auto;}
+  .greeting-pill{
+    display:inline-block; margin-top:18px; padding:10px 20px; border-radius:999px;
+    background:rgba(255,201,229,0.35); border:1.5px solid rgba(244,114,182,0.35); color:var(--pinkdeep); font-weight:700; font-family:'Fredoka',sans-serif;
+  }
+  h2.section-title{ font-size:1.7rem; margin-bottom:6px; display:flex; align-items:center; gap:8px; color:var(--text);}
+  p.section-sub{ color:var(--text2); margin-bottom:22px;}
+  .affirm-card{ text-align:center; padding:50px 20px; min-height:180px; display:flex; align-items:center; justify-content:center;}
+  .affirm-text{ font-size:1.6rem; font-family:'Quicksand',sans-serif; color:#C0266B; }
+  .timeline{ position:relative; padding-left:26px; margin-top:20px;}
+  .timeline::before{content:''; position:absolute; left:8px; top:4px; bottom:4px; width:2px; background:linear-gradient(180deg, var(--accent), var(--pink), transparent);}
+  .tl-item{ position:relative; margin-bottom:24px;}
+  .tl-item::before{content:''; position:absolute; left:-26px; top:4px; width:12px; height:12px; border-radius:50%; background:var(--pinkdeep); box-shadow:0 0 10px var(--pink);}
+  .tl-item h4{font-family:'Quicksand',sans-serif; margin-bottom:4px; color:var(--text);}
+  .tl-item p{color:var(--text2); font-size:0.95rem;}
+  .grid3{ display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:16px; margin-top:20px;}
+  .mini-card{ background: linear-gradient(160deg, rgba(255,255,255,0.9), rgba(255,240,245,0.85)); border:1.5px solid var(--card-border); border-radius:22px; padding:18px; text-align:center; cursor:pointer; transition:.2s ease; font-weight:600; color:var(--text); box-shadow: 0 4px 16px rgba(244,114,182,0.08);}
+  .mini-card:hover{ transform:translateY(-4px) scale(1.02); border-color:var(--accent); box-shadow: 0 8px 24px rgba(244,114,182,0.15);}
+  .mini-card .emoji{font-size:1.9rem; display:block; margin-bottom:8px;}
+  .mini-card.done{ background:rgba(167,243,208,0.25); border-color:var(--success); }
+  .goal-row{ display:flex; align-items:center; gap:14px; padding:12px 6px; border-bottom:1px solid rgba(244,114,182,0.1);}
+  .goal-row:last-child{border-bottom:none;}
+  .check{
+    width:26px; height:26px; border-radius:8px; border:2px solid var(--accent);
+    display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; transition:.2s ease;
+  }
+  .check.checked{ background:var(--success); border-color:var(--success); color:#fff; font-weight:900;}
+  .goal-label{flex:1; color:var(--text);}
+  .goal-label.checked{ text-decoration:line-through; color:var(--text2);}
+  .progress-wrap{ background:rgba(244,114,182,0.12); border-radius:999px; height:16px; overflow:hidden; margin:18px 0; border:1px solid rgba(244,114,182,0.15);}
+  .progress-bar{ height:100%; background:linear-gradient(90deg, #F9A8D4, #F472B6, #E879A8); border-radius:999px; transition: width .4s ease; width:0%;}
+  .stat-row{display:flex; gap:14px; flex-wrap:wrap; margin-top:16px;}
+  .stat-pill{background:rgba(255,201,229,0.3); border:1.5px solid var(--card-border); padding:10px 18px; border-radius:999px; font-weight:700; font-family:'Fredoka',sans-serif; color:var(--text);}
+  textarea, select, input[type=text]{
+    width:100%; background:rgba(255,255,255,0.8); border:1px solid var(--card-border); color:var(--text);
+    border-radius:14px; padding:12px 14px; font-family:'Nunito',sans-serif; font-size:1rem; resize:vertical;
+  }
+  textarea:focus, select:focus, input:focus{ outline:2px solid var(--accent); }
+  .mood-row{ display:flex; gap:10px; margin:14px 0 20px; flex-wrap:wrap;}
+  .mood{ font-size:1.6rem; padding:8px 14px; border-radius:999px; background:rgba(255,201,229,0.2); border:1.5px solid var(--card-border); cursor:pointer;}
+  .mood.selected{ background:rgba(249,168,212,0.4); border-color:var(--pinkdeep); transform:scale(1.12);}
+  .q-block{margin-bottom:18px;}
+  .q-block label{ display:block; margin-bottom:6px; color:var(--pinkdeep); font-weight:700; font-family:'Fredoka',sans-serif;}
+  .letter{
+    background: linear-gradient(160deg, rgba(255,255,255,0.95), rgba(255,228,240,0.85));
+    border:1.5px solid rgba(244,114,182,0.3); border-radius:26px; padding:30px; text-align:center;
+    font-family:'Caveat',cursive; font-size:1.6rem; line-height:1.5; color:#C0266B; min-height:150px;
+    display:flex; align-items:center; justify-content:center; position:relative;
+    box-shadow: 0 8px 24px rgba(244,114,182,0.1);
+  }
+  .letter::before{ content:'💌'; position:absolute; top:-16px; left:50%; transform:translateX(-50%); font-size:1.6rem; filter: drop-shadow(0 3px 6px rgba(244,114,182,0.25));}
+  .night-card{ text-align:center; padding:40px 20px;}
+  .moon{ font-size:3.5rem; animation: floatY 5s ease-in-out infinite;}
+  @keyframes floatY{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(-14px);} }
+  .toggle-row{ display:flex; align-items:center; justify-content:space-between; padding:14px 0; border-bottom:1px solid rgba(244,114,182,0.1);}
+  .switch{ width:46px; height:26px; border-radius:999px; background:rgba(244,114,182,0.15); position:relative; cursor:pointer; transition:.2s ease;}
+  .switch::before{content:''; position:absolute; width:20px; height:20px; border-radius:50%; background:#fff; top:3px; left:3px; transition:.25s ease; box-shadow:0 1px 4px rgba(0,0,0,0.1);}
+  .switch.on{ background:var(--accent);}
+  .switch.on::before{ left:23px; background:#fff;}
+  #mascot{
+    position:fixed; bottom:22px; left:22px; z-index:60; font-size:2.4rem;
+    animation: hop 2.4s ease-in-out infinite; cursor:pointer; filter: drop-shadow(0 4px 10px rgba(244,114,182,0.3));
+  }
+  @keyframes hop{ 0%,100%{transform:translateY(0) rotate(0deg);} 30%{transform:translateY(-10px) rotate(-6deg);} 60%{transform:translateY(0) rotate(4deg);} }
+  #toast{
+    position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(20px);
+    background: linear-gradient(160deg, #FFFFFF, #FFF0F5); border:2px solid var(--pink); color:var(--text);
+    padding:14px 24px; border-radius:999px; z-index:70; opacity:0; pointer-events:none;
+    transition:.35s ease; font-weight:700; font-family:'Fredoka',sans-serif; box-shadow:0 10px 30px rgba(244,114,182,0.2), 0 0 0 4px rgba(255,201,229,0.2); text-align:center; max-width:80vw;
+  }
+  #toast.show{ opacity:1; transform:translateX(-50%) translateY(0);}
+  .sparkle-trail{
+    position:fixed; pointer-events:none; z-index:65; font-size:14px;
+    animation: sparkleFade 0.9s ease-out forwards;
+  }
+  @keyframes sparkleFade{ 0%{opacity:1; transform:translateY(0) scale(1);} 100%{opacity:0; transform:translateY(-18px) scale(0.6);} }
+  #confetti-holder{ position:fixed; inset:0; pointer-events:none; z-index:80; overflow:hidden;}
+  .confetti{ position:absolute; width:8px; height:14px; top:-20px; opacity:0.9; animation: fall linear forwards; }
+  @keyframes fall{ to{ transform: translateY(105vh) rotate(400deg); opacity:0.3; } }
+  footer{ text-align:center; padding:26px; color:var(--text2); font-size:0.85rem; position:relative; z-index:1;}
+  ::-webkit-scrollbar{width:8px;}
+  ::-webkit-scrollbar-thumb{background:var(--accent); border-radius:8px;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+</style>
+</head>
+<body>
+<div id="bgLayer">
+  <div class="fog"></div>
+  <div class="fog f2"></div>
+</div>
+<div id="confetti-holder"></div>
+<div id="app">
+  <header class="topbar">
+    <div class="brand"><span class="dot"></span><span class="display">Arfa's Sanctuary</span> 🌸</div>
+    <button id="menuBtn" onclick="toggleNav()">☰ Menu</button>
+  </header>
+  <div id="navOverlay" onclick="toggleNav()"></div>
+  <nav id="pageNav">
+    <div class="navHead"><span class="display">Navigate</span><span onclick="toggleNav()" style="cursor:pointer;font-size:1.3rem;">✕</span></div>
+    <a data-page="home" onclick="goTo('home')">🏠 Home</a>
+    <a data-page="affirm" onclick="goTo('affirm')">🌸 Daily Affirmations</a>
+    <a data-page="growth" onclick="goTo('growth')">🌱 Growth</a>
+    <a data-page="control" onclick="goTo('control')">💜 Self Control</a>
+    <a data-page="family" onclick="goTo('family')">🏡 Family</a>
+    <a data-page="goals" onclick="goTo('goals')">🎯 Goals</a>
+    <a data-page="journal" onclick="goTo('journal')">📖 Journal</a>
+    <a data-page="letters" onclick="goTo('letters')">💌 Letters for Siso</a>
+    <a data-page="night" onclick="goTo('night')">🌙 Night Reset</a>
+    <a data-page="settings" onclick="goTo('settings')">⚙️ Settings</a>
+  </nav>
+  <main>
+    <section class="page active" id="page-home">
+      <div class="hero">
+        <h1>Welcome Home, <span id="homeName">Arfa</span>.</h1>
+        <p class="subtitle">This little corner of the internet was made to remind you that every small step matters.</p>
+        <div class="greeting-pill" id="greetingPill">Welcome back, Arfa 🌸</div>
+      </div>
+      <div class="btn-grid">
+        <button class="btn" onclick="ripple(event); goTo('growth')">🌸 Continue Growing, Ari</button>
+        <button class="btn" onclick="ripple(event); goTo('growth')">💜 Brave Arfa's Journey</button>
+        <button class="btn" onclick="ripple(event); goTo('control')">🦋 Today's Reset</button>
+        <button class="btn" onclick="ripple(event); goTo('goals')">🌷 Gurlie Pop Goals</button>
+        <button class="btn" onclick="ripple(event); goTo('affirm')">✨ Daily Motivation</button>
+        <button class="btn" onclick="ripple(event); goTo('night')">🌙 Night Reset</button>
+        <button class="btn" onclick="ripple(event); goTo('journal')">📖 Ari's Journal</button>
+        <button class="btn" onclick="ripple(event); goTo('letters')">💌 Letters For Siso</button>
+      </div>
+    </section>
+    <section class="page" id="page-affirm">
+      <h2 class="section-title">🌸 Daily Affirmations</h2>
+      <p class="section-sub">A new one every time you tap. Take a breath before you read it.</p>
+      <div class="card affirm-card">
+        <div class="affirm-text" id="affirmText">"I am stronger than my past."</div>
+      </div>
+      <div style="text-align:center; margin-top:20px;">
+        <button class="btn" onclick="ripple(event); newAffirmation()">🔄 Another one, please</button>
+      </div>
+    </section>
+    <section class="page" id="page-growth">
+      <h2 class="section-title">🌱 Growth, not perfection</h2>
+      <p class="section-sub">Healing was never meant to be a straight line, <span class="dyn-name">Ari</span>.</p>
+      <div class="card">
+        <div class="timeline">
+          <div class="tl-item"><h4>A hard day</h4><p>Doesn't erase the good days before it. It's just one page in a much longer story.</p></div>
+          <div class="tl-item"><h4>A slip-up</h4><p>Isn't proof you failed. It's proof you're human, still trying.</p></div>
+          <div class="tl-item"><h4>A quiet, ordinary day</h4><p>Where you just… kept going. That counts too, more than you think.</p></div>
+          <div class="tl-item"><h4>A small win</h4><p>Drinking water, texting mom back, closing an app you didn't need — tiny, but real.</p></div>
+          <div class="tl-item"><h4>Tomorrow</h4><p>Another sunrise, another chance to begin again. No permission needed.</p></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:18px;">
+        <h3 style="margin-bottom:10px;">Gentle truths</h3>
+        <p style="color:var(--text2); line-height:1.7;">Healing isn't linear. Progress isn't perfection. Bad days happen and they don't undo your effort. One mistake doesn't erase everything you've built. Every sunrise is another chance — and you're allowed to take it.</p>
+      </div>
+    </section>
+    <section class="page" id="page-control">
+      <h2 class="section-title">💜 Today's Reset</h2>
+      <p class="section-sub">Tap whatever you need right now. No pressure to do them all.</p>
+      <div class="grid3" id="controlGrid"></div>
+    </section>
+    <section class="page" id="page-family">
+      <h2 class="section-title">🏡 For the people at home</h2>
+      <p class="section-sub">No guilt here — just gentle nudges toward the people who love you.</p>
+      <div class="grid3">
+        <div class="mini-card"><span class="emoji">🗣️</span>Go talk to your parents, even for five minutes</div>
+        <div class="mini-card"><span class="emoji">🧹</span>Help around the house — small tasks count</div>
+        <div class="mini-card"><span class="emoji">😊</span>Share a smile with someone today</div>
+        <div class="mini-card"><span class="emoji">📸</span>Create one small memory worth keeping</div>
+        <div class="mini-card"><span class="emoji">🤍</span>A little kindness always matters</div>
+        <div class="mini-card"><span class="emoji">🫂</span>Ask someone how their day really was</div>
+      </div>
+    </section>
+    <section class="page" id="page-goals">
+      <h2 class="section-title">🎯 Gurlie Pop Goals</h2>
+      <p class="section-sub">Check off what you get to today, <span class="dyn-name">Bestie</span>.</p>
+      <div class="card">
+        <div id="goalsList"></div>
+        <div class="progress-wrap"><div class="progress-bar" id="goalProgress"></div></div>
+        <div class="stat-row">
+          <div class="stat-pill">🔥 Streak: <span id="streakCount">1</span> day</div>
+          <div class="stat-pill">⭐ XP: <span id="xpCount">0</span></div>
+          <div class="stat-pill" id="badgePill" style="display:none;">🏅 Badge earned!</div>
+        </div>
+      </div>
+    </section>
+    <section class="page" id="page-journal">
+      <h2 class="section-title">📖 Ari's Journal</h2>
+      <p class="section-sub">Private, honest, just for you. Nothing here needs to be perfect.</p>
+      <div class="card">
+        <div class="q-block">
+          <label>How are you feeling right now?</label>
+          <div class="mood-row" id="moodRow"></div>
+        </div>
+        <div class="q-block"><label>What made you smile?</label><textarea rows="2" placeholder="Even something tiny..."></textarea></div>
+        <div class="q-block"><label>What challenged you?</label><textarea rows="2" placeholder="It's okay to name it..."></textarea></div>
+        <div class="q-block"><label>What are you thankful for?</label><textarea rows="2" placeholder="Big or small..."></textarea></div>
+        <div class="q-block"><label>What are you proud of today?</label><textarea rows="2" placeholder="You're allowed to be proud..."></textarea></div>
+        <div class="q-block"><label>What would Future Arfa thank you for?</label><textarea rows="2" placeholder="Write it to her..."></textarea></div>
+        <button class="btn" onclick="ripple(event); saveJournal()">💾 Save today's entry</button>
+      </div>
+    </section>
+    <section class="page" id="page-letters">
+      <h2 class="section-title">💌 Letters for Siso</h2>
+      <p class="section-sub">Open one whenever you need to hear it.</p>
+      <div class="letter" id="letterText">"I'm proud of you."</div>
+      <div style="text-align:center; margin-top:20px;">
+        <button class="btn" onclick="ripple(event); newLetter()">💌 Open another letter</button>
+      </div>
+    </section>
+    <section class="page" id="page-night">
+      <h2 class="section-title">🌙 Night Reset</h2>
+      <div class="card night-card">
+        <div class="moon">🌙</div>
+        <h3 style="margin:16px 0 10px;">However today went, <span class="dyn-name">Ari</span> — it's okay to rest now.</h3>
+        <p style="color:var(--text2); max-width:440px; margin:0 auto; line-height:1.7;">
+          Forgive yourself for today's stumbles. Rest well — your body and mind have earned it.
+          Tomorrow is another opportunity, not a test you have to ace. Sleep peacefully. You're safe here.
+        </p>
+        <button class="btn" style="margin-top:22px;" onclick="ripple(event); showToast('Good night, ' + randomName() + '. Future Arfa says thank you. ✨')">🌙 Tuck me in</button>
+      </div>
+    </section>
+    <section class="page" id="page-settings">
+      <h2 class="section-title">⚙️ Settings</h2>
+      <div class="card">
+        <div class="toggle-row"><span>🌧️ Rain sounds</span><div class="switch" data-sound="rain" onclick="toggleSwitch(this)"></div></div>
+        <div class="toggle-row"><span>🌲 Forest sounds</span><div class="switch" data-sound="forest" onclick="toggleSwitch(this)"></div></div>
+        <div class="toggle-row"><span>💨 Wind sounds</span><div class="switch" data-sound="wind" onclick="toggleSwitch(this)"></div></div>
+        <div class="toggle-row"><span>🌌 Night ambience</span><div class="switch" data-sound="night" onclick="toggleSwitch(this)"></div></div>
+        <p style="color:var(--text2); font-size:0.85rem; margin-top:14px;">Ambient sounds are a visual preview in this build — muted by default, just like real life should feel: calm.</p>
+      </div>
+    </section>
+  </main>
+  <footer>made with 💜 just for you, Arfa</footer>
+</div>
+<div id="mascot" title="tap me" onclick="rabbitSpeak()">🐇</div>
+<div id="toast"></div>
+<script>
+const NAMES = ["Arfa","Ari","Gurlie Pop Ari","Gurlie","Siso","Brave Arfa","Future Arfa","Sunshine Ari","Bestie"];
+const GREETINGS = [
+  "Welcome back, Arfa 🌸","Hey Gurlie Pop Ari.","Proud of you for showing up today.",
+  "Brave Arfa is back.","Future Arfa is smiling already.","You came back today. That's a win.",
+  "Keep going, Siso.","Sunshine Ari, hi 🌷","Bestie, you made it here again — that matters."
+];
+const AFFIRMATIONS = [
+  "I am stronger than my past.","I choose peace.","My future is worth protecting.",
+  "I don't need toxic people to feel valuable.","I can begin again.","I deserve happiness.",
+  "I'm growing every day.","I'm becoming someone I'll admire.","I am learning.","I am healing.",
+  "I'm proud of myself.","I deserve kindness.","I get to decide who I become next.",
+  "Small steps still move me forward.","I'm allowed to outgrow what hurt me.",
+  "Rest is part of the progress.","I am not behind — I am exactly on my own path.",
+  "I trust myself a little more today.","My peace is non-negotiable.","I am worthy of soft, easy love."
+];
+const LETTERS = [
+  "I'm proud of you.","You survived everything you've faced.","You don't have to be perfect.",
+  "You deserve peace.","You've already come so far.","Don't stop now.",
+  "Whatever today looked like, you're still worthy of love.","You're allowed to outgrow old habits — even slowly.",
+  "You are not your worst day.","Future you is already grateful for tonight's version of you."
+];
+const CONTROL_ITEMS = [
+  {e:"⏸️",t:"Pause for a second"},
+  {e:"🌬️",t:"Take a deep breath"},
+  {e:"💧",t:"Drink some water"},
+  {e:"🌳",t:"Go outside for a bit"},
+  {e:"🧘",t:"Stretch it out"},
+  {e:"✍️",t:"Write your thoughts down"},
+  {e:"📚",t:"Read a page or two"},
+  {e:"🧺",t:"Organize your room"},
+  {e:"🤝",t:"Help your parents with something"},
+  {e:"🎮",t:"Step away from games that don't serve you right now"},
+  {e:"📵",t:"Put your phone down for 10 minutes"},
+  {e:"🌟",t:"Do one small productive task"}
+];
+const GOALS = ["Wake up","Drink water","Exercise","Study","Read","Journal","Help parents","Stay away from toxic habits today","Sleep on time"];
+const MOODS = ["😊","😔","😴","😤","🥹","😌","🤍"];
+const POPUPS = ["💧 Hydration check!","🌸 Proud of you for opening the website today.","🦋 Tiny progress is still progress.","✨ Future Arfa says thank you.","🐇 You've got this, Siso!","🦋 Keep flying, Ari."];
+let xp = 0, streak = 1, goalState = {}, controlDone = new Set(), selectedMood = null;
+function randomName(){ return NAMES[Math.floor(Math.random()*NAMES.length)]; }
+function randomItem(arr, exclude){
+  let i = Math.floor(Math.random()*arr.length);
+  if(arr.length>1 && arr[i]===exclude){ i = (i+1)%arr.length; }
+  return arr[i];
+}
+function toggleNav(){
+  document.getElementById('pageNav').classList.toggle('open');
+  document.getElementById('navOverlay').classList.toggle('show');
+}
+function goTo(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  document.querySelectorAll('#pageNav a').forEach(a=>a.classList.toggle('active', a.dataset.page===page));
+  document.getElementById('pageNav').classList.remove('open');
+  document.getElementById('navOverlay').classList.remove('show');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+function ripple(e){
+  const btn = e.currentTarget;
+  const circle = document.createElement('span');
+  circle.classList.add('ripple');
+  const rect = btn.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height);
+  circle.style.width = circle.style.height = size+'px';
+  circle.style.left = (e.clientX - rect.left - size/2)+'px';
+  circle.style.top = (e.clientY - rect.top - size/2)+'px';
+  btn.appendChild(circle);
+  setTimeout(()=>circle.remove(), 650);
+}
+let toastTimer;
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('show'), 3200);
+}
+function confettiBurst(){
+  const holder = document.getElementById('confetti-holder');
+  const colors = ['#F9A8D4','#F472B6','#FFC9E5','#E879A8','#FFB6C1'];
+  for(let i=0;i<28;i++){
+    const c = document.createElement('div');
+    c.className='confetti';
+    c.style.left = Math.random()*100+'vw';
+    c.style.background = colors[Math.floor(Math.random()*colors.length)];
+    c.style.animationDuration = (2.2+Math.random()*1.6)+'s';
+    c.style.borderRadius = Math.random()>0.5 ? '50%' : '3px';
+    holder.appendChild(c);
+    setTimeout(()=>c.remove(), 4000);
+  }
+}
+function initHome(){
+  document.getElementById('homeName').textContent = randomName();
+  document.getElementById('greetingPill').textContent = randomItem(GREETINGS);
+  document.querySelectorAll('.dyn-name').forEach(el=> el.textContent = randomName());
+}
+let lastAffirm = null;
+function newAffirmation(){
+  lastAffirm = randomItem(AFFIRMATIONS, lastAffirm);
+  document.getElementById('affirmText').textContent = '"'+lastAffirm+'"';
+}
+function renderControl(){
+  const grid = document.getElementById('controlGrid');
+  grid.innerHTML = '';
+  CONTROL_ITEMS.forEach((item, idx)=>{
+    const div = document.createElement('div');
+    div.className = 'mini-card' + (controlDone.has(idx) ? ' done' : '');
+    div.innerHTML = `<span class="emoji">${item.e}</span>${item.t}`;
+    div.onclick = ()=>{
+      if(controlDone.has(idx)){ controlDone.delete(idx); }
+      else{
+        controlDone.add(idx);
+        showToast("Love that for you, " + randomName() + ". 🌸");
+        addXp(5);
+      }
+      renderControl();
+    };
+    grid.appendChild(div);
+  });
+}
+function renderGoals(){
+  const list = document.getElementById('goalsList');
+  list.innerHTML = '';
+  GOALS.forEach((g, idx)=>{
+    if(!(idx in goalState)) goalState[idx] = false;
+    const row = document.createElement('div');
+    row.className = 'goal-row';
+    row.innerHTML = `<div class="check ${goalState[idx]?'checked':''}">${goalState[idx]?'✓':''}</div><div class="goal-label ${goalState[idx]?'checked':''}">${g}</div>`;
+    row.querySelector('.check').onclick = ()=>{
+      goalState[idx] = !goalState[idx];
+      if(goalState[idx]){ addXp(10); }
+      renderGoals();
+    };
+    list.appendChild(row);
+  });
+  const done = Object.values(goalState).filter(Boolean).length;
+  const pct = Math.round((done/GOALS.length)*100);
+  document.getElementById('goalProgress').style.width = pct+'%';
+  document.getElementById('streakCount').textContent = streak;
+  document.getElementById('badgePill').style.display = pct===100 ? 'inline-block' : 'none';
+  if(pct===100){ confettiBurst(); showToast("Every single goal today, " + randomName() + "?! Incredible. 🏅"); }
+}
+function addXp(n){
+  xp += n;
+  document.getElementById('xpCount').textContent = xp;
+}
+function renderMoods(){
+  const row = document.getElementById('moodRow');
+  row.innerHTML = '';
+  MOODS.forEach(m=>{
+    const span = document.createElement('span');
+    span.className = 'mood' + (selectedMood===m ? ' selected' : '');
+    span.textContent = m;
+    span.onclick = ()=>{ selectedMood = m; renderMoods(); };
+    row.appendChild(span);
+  });
+}
+function saveJournal(){
+  showToast(randomName() + ", your words are safe here. 📖✨");
+  confettiBurst();
+}
+let lastLetter = null;
+function newLetter(){
+  lastLetter = randomItem(LETTERS, lastLetter);
+  document.getElementById('letterText').textContent = '"'+lastLetter+'"';
+}
+function toggleSwitch(el){ el.classList.toggle('on'); }
+function rabbitSpeak(){
+  showToast(randomItem(POPUPS));
+}
+setInterval(()=>{ if(Math.random()<0.5) showToast(randomItem(POPUPS)); }, 45000);
+function buildBackground(){
+  const layer = document.getElementById('bgLayer');
+  for(let i=0;i<30;i++){
+    const s = document.createElement('div');
+    s.className='star';
+    const size = 1+Math.random()*2.4;
+    s.style.width = s.style.height = size+'px';
+    s.style.top = Math.random()*100+'%';
+    s.style.left = Math.random()*100+'%';
+    s.style.animationDelay = (Math.random()*3.5)+'s';
+    s.style.animationDuration = (2.5+Math.random()*3)+'s';
+    layer.appendChild(s);
+  }
+  for(let i=0;i<8;i++){
+    const f = document.createElement('div');
+    f.className='firefly';
+    f.style.top = (55+Math.random()*40)+'%';
+    f.style.left = Math.random()*100+'%';
+    f.style.animationDelay = (Math.random()*6)+'s';
+    f.style.animationDuration = (6+Math.random()*5)+'s';
+    layer.appendChild(f);
+  }
+  const cuteBits = ['🩷','💗','🎀','✨','🌸','🦋'];
+  for(let i=0;i<16;i++){
+    const h = document.createElement('div');
+    h.textContent = cuteBits[i % cuteBits.length];
+    h.style.position='absolute';
+    h.style.fontSize = (12+Math.random()*14)+'px';
+    h.style.left = Math.random()*100+'%';
+    h.style.top = (100+Math.random()*20)+'%';
+    h.style.opacity = 0.3+Math.random()*0.25;
+    h.style.animation = `floatUpBit ${18+Math.random()*14}s linear infinite`;
+    h.style.animationDelay = (-Math.random()*30)+'s';
+    layer.appendChild(h);
+  }
+  for(let i=0;i<8;i++){
+    const b = document.createElement('div');
+    b.className='butterfly';
+    b.textContent = '🦋';
+    b.style.fontSize = (18 + Math.random()*14) + 'px';
+    b.style.top = (5+Math.random()*70)+'%';
+    b.style.animationDuration = (28+Math.random()*24)+'s';
+    b.style.animationDelay = (-Math.random()*30)+'s';
+    b.style.opacity = 0.45 + Math.random()*0.25;
+    layer.appendChild(b);
+  }
+}
+const sparkleBits = ['✨','💗','🩷','🦋'];
+let lastSparkle = 0;
+document.addEventListener('mousemove', (e)=>{
+  const now = Date.now();
+  if(now - lastSparkle < 90) return;
+  lastSparkle = now;
+  const s = document.createElement('div');
+  s.className = 'sparkle-trail';
+  s.textContent = sparkleBits[Math.floor(Math.random()*sparkleBits.length)];
+  s.style.left = (e.clientX + (Math.random()*10-5)) + 'px';
+  s.style.top = (e.clientY + (Math.random()*10-5)) + 'px';
+  document.body.appendChild(s);
+  setTimeout(()=>s.remove(), 900);
+});
+window.addEventListener('DOMContentLoaded', ()=>{
+  buildBackground();
+  initHome();
+  newAffirmation();
+  renderControl();
+  renderGoals();
+  renderMoods();
+  newLetter();
+  setTimeout(()=> showToast("Hi " + randomName() + " 🌸 so glad you're here."), 1400);
+});
+</script>
+</body>
+</html>
